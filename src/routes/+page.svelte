@@ -1,6 +1,13 @@
 <script>
-    let name = 'world';
+    import '../lib/abbreviations.js';
+    import { abbreviations } from '../lib/abbreviations.js';
+    let inputName = 'create date';
+    $: outputName = inputName.split(' ').map(word => abbreviations[word.toUpperCase()]).join('_');
 </script>
 
-<h1>Hello {name}!</h1>
-<input type="text" bind:value={name}>
+<label>
+    Name:
+    <input type="text" bind:value={inputName} />
+</label>
+<div>{outputName}</div>
+
