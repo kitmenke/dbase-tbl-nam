@@ -4,12 +4,24 @@
     import 'tachyons';
 
     let chkIsUppercase = false;
-    let txtFriendlyNames = 'create date\nupdate date';
-    $: txtDatabaseNames = convert(txtFriendlyNames, chkIsUppercase);
+    let chkConvertUnknown = false;
+    let txtFriendlyNames = 'create date\ndata lake update timestamp\nassign flag';
+    $: txtDatabaseNames = convert(txtFriendlyNames, chkIsUppercase, chkConvertUnknown);
+
+    function convertWord(w) {
+        let word = w.toUpperCase();
+        if (abbreviations.hasOwnProperty(word)) {
+            return abbreviations[word];
+        } else if (chkConvertUnknown) {
+            return word.replace(/[AEIOU]/g, '');
+        } else {
+            return '?';
+        }
+    }
 
     function convertLine(line){
         let words = line.split(' ');
-        let result = words.map(word => abbreviations.hasOwnProperty(word.toUpperCase()) ? abbreviations[word.toUpperCase()] : '?').join('_');
+        let result = words.map(word => convertWord(word)).join('_');
         return chkIsUppercase ? result.toUpperCase() : result.toLowerCase();
     }
 
@@ -19,18 +31,21 @@
     }
 </script>
 
-<form class="cf pa4 black-80">
-    <div class="fl w-100 pa3 bg-light-gray">
-        Options:
-        <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox" bind:checked={chkIsUppercase} />{chkIsUppercase ? 'UPPERCASE' : 'lowercase'}</label>
+<form class="cf pa4 black-80 sans-serif">
+    <div class="fl w-100 pa3">
+        <h1>Database Table Name Converter</h1>
+        <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox" bind:checked={chkIsUppercase} /> {chkIsUppercase ? 'UPPERCASE' : 'lowercase'}</label>
+        <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox" bind:checked={chkConvertUnknown} /> {chkConvertUnknown ? 'Try to convert unknown words' : 'Unknown words aren\'t converted'}</label>
     </div>
     <div class="fl w-50 tc pa3">
-        <label for="friendly-names" class="f6 b db mb2">Enter the friendly names to convert:</label>
-        <textarea name="friendly-names" bind:value={txtFriendlyNames} class="db border-box w-100 ba b--black-20 br2 mb2 pa2"></textarea>
+        <label for="friendly-names" class="f6 b db mb2">Names to convert</label>
+        <textarea name="friendly-names" bind:value={txtFriendlyNames} class="db border-box w-100 ba b--black-20 br2 mb2 pa2 h5"></textarea>
     </div>
     <div class="fl w-50 tc pa3">
-        <label for="database-names" class="f6 b db mb2">Database Names</label>
-        <textarea readonly name="database-names" bind:value={txtDatabaseNames} class="db border-box w-100 ba b--black-20 br2 mb2 bg-light-gray pa2"></textarea>
+        <label for="database-names" class="f6 b db mb2">Converted database names</label>
+        <textarea readonly name="database-names" bind:value={txtDatabaseNames} class="db border-box w-100 ba b--black-20 br2 mb2 bg-light-gray pa2 h5"></textarea>
+    </div>
+    <div class="fl w-100 pa3">
+        Made by <a href="https://kitmenke.com">Kit</a> with <a href="https://svelte.dev">Svelte</a> and <a href="https://tachyons.io">Tachyons</a>.
     </div>
 </form>
-Num lines: {txtFriendlyNames.split('\n').length}
