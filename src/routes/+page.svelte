@@ -30,6 +30,10 @@
         return lines.map(line => convertLine(line)).join('\n');
     }
 </script>
+<svelte:head>
+	<title>Database Table Name Converter</title>
+	<meta name="description" content="A tool for converting names into database abbreviations" />
+</svelte:head>
 
 <form class="cf pa4 black-80 sans-serif">
     <div class="fl w-100 pa3">
