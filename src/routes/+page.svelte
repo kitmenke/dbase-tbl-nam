@@ -1,39 +1,16 @@
 <script>
-    import '../lib/abbreviations.js';
-    import { abbreviations } from '../lib/abbreviations.js';
     import 'tachyons';
+    import { convert } from '$lib/common.js';
 
     let chkIsUppercase = false;
     let chkConvertUnknown = false;
     let txtFriendlyNames = 'create date\ndata lake update timestamp\nassign flag';
     $: txtDatabaseNames = convert(txtFriendlyNames, chkIsUppercase, chkConvertUnknown);
-
-    function convertWord(w) {
-        let word = w.toUpperCase();
-        if (abbreviations.hasOwnProperty(word)) {
-            return abbreviations[word];
-        } else if (chkConvertUnknown) {
-            return word.replace(/[AEIOU]/g, '');
-        } else {
-            return '?';
-        }
-    }
-
-    function convertLine(line){
-        let words = line.split(' ');
-        let result = words.map(word => convertWord(word)).join('_');
-        return chkIsUppercase ? result.toUpperCase() : result.toLowerCase();
-    }
-
-    function convert(){
-        let lines = txtFriendlyNames.split('\n');
-        return lines.map(line => convertLine(line)).join('\n');
-    }
 </script>
 <svelte:head>
 	<title>Database Table Name Converter</title>
 	<meta name="description" content="A tool for converting names into database abbreviations" />
-</svelte:head>
+</svelte:head>  
 
 <form class="cf pa4 black-80 sans-serif">
     <div class="fl w-100 pa3">
