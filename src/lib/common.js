@@ -86,30 +86,58 @@ function convertWord(w, chkFuzzyMatch) {
     
     // First try exact match
     if (abbreviations.hasOwnProperty(word)) {
-        return abbreviations[word];
+        return {
+            result: abbreviations[word],
+            matchType: 'exact',
+            original: word,
+            matched: word
+        };
     }
     
     if (chkFuzzyMatch) {
         // Try fuzzy match
         const fuzzyMatch = findFuzzyMatch(word);
         if (fuzzyMatch) {
-            return abbreviations[fuzzyMatch];
+            return {
+                result: abbreviations[fuzzyMatch],
+                matchType: 'fuzzy',
+                original: word,
+                matched: fuzzyMatch
+            };
         }
     }
     
-    return '?';
+    return {
+        result: '?',
+        matchType: 'none',
+        original: word,
+        matched: null
+    };
 }
 
-// Keep your existing functions unchanged
+// Updated functions to handle match information
 function convertLine(line, isUppercase, chkFuzzyMatch){
     let words = line.trim().split(' ');
-    let result = words.map(word => convertWord(word, chkFuzzyMatch)).join('_');
-    return isUppercase ? result.toUpperCase() : result.toLowerCase();
+    let wordResults = words.map(word => convertWord(word, chkFuzzyMatch));
+    let result = wordResults.map(wr => wr.result).join('_');
+    let fuzzyMatches = wordResults.filter(wr => wr.matchType === 'fuzzy');
+    
+    return {
+        result: isUppercase ? result.toUpperCase() : result.toLowerCase(),
+        fuzzyMatches: fuzzyMatches
+    };
 }
 
 function convert(inputText, isUppercase, chkFuzzyMatch){
     let lines = inputText.split('\n');
-    return lines.map(line => convertLine(line, isUppercase, chkFuzzyMatch)).join('\n');
+    let lineResults = lines.map(line => convertLine(line, isUppercase, chkFuzzyMatch));
+    let result = lineResults.map(lr => lr.result).join('\n');
+    let allFuzzyMatches = lineResults.flatMap(lr => lr.fuzzyMatches);
+    
+    return {
+        result: result,
+        fuzzyMatches: allFuzzyMatches
+    };
 }
 
 export { convert };

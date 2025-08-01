@@ -415,6 +415,7 @@ export const abbreviations = {
     "DATAGRAM": "DTGRM",
     "DATAMART": "DTMART",
     "DATATYPE": "DTYP",
+    "DATALAKE": "DL",
     "DATE": "DTE",
     "DATETIME": "DTETIM",
     "DEACTIVATE": "DACTV",
