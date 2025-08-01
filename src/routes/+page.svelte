@@ -15,7 +15,7 @@
 </svelte:head>  
 
 <form class="cf pa4 black-80 sans-serif">
-    <div class="fl w-100 pa3">
+    <div class="fl w-100">
         <h1>Database Table Name Converter</h1>
         <div class="fl pa3">
             <fieldset class="bn pa0 ma0">
@@ -60,6 +60,7 @@
         {/if}
     </div>
     <div class="fl w-100 pa3">
-        Made by <a href="https://kitmenke.com">Kit</a> with <a href="https://svelte.dev">Svelte</a> and <a href="https://tachyons.io">Tachyons</a>.
+        <div class="i mv3">Updated <time datetime="2025-07-31">2025-07-31</time>: added fuzzy matching and updated abbreviations list.</div>
+        <div>Made by <a href="https://kitmenke.com">Kit</a> with <a href="https://svelte.dev">Svelte</a> and <a href="https://tachyons.io">Tachyons</a>.</div>
     </div>
 </form>
