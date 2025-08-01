@@ -2,10 +2,10 @@
     import 'tachyons';
     import { convert } from '$lib/common.js';
 
-    let chkIsUppercase = false;
-    let chkFuzzyMatch = false;
+    let caseOption = 'lowercase'; // 'lowercase' or 'uppercase'
+    let matchOption = 'exact'; // 'exact' or 'fuzzy'
     let txtFriendlyNames = 'create date\ndatalake update timestamp\nassign flag';
-    $: conversionResult = convert(txtFriendlyNames, chkIsUppercase, chkFuzzyMatch);
+    $: conversionResult = convert(txtFriendlyNames, caseOption === 'uppercase', matchOption === 'fuzzy');
     $: txtDatabaseNames = conversionResult.result;
     $: fuzzyMatches = conversionResult.fuzzyMatches;
 </script>
@@ -17,8 +17,24 @@
 <form class="cf pa4 black-80 sans-serif">
     <div class="fl w-100 pa3">
         <h1>Database Table Name Converter</h1>
-        <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox" bind:checked={chkIsUppercase} /> {chkIsUppercase ? 'UPPERCASE' : 'lowercase'}</label>
-        <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox" bind:checked={chkFuzzyMatch} /> {chkFuzzyMatch ? 'Fuzzy matches' : 'Exact matches only'}</label>
+        <fieldset class="bn pa0 ma0">
+            <legend class="f6 b mb2">Output case:</legend>
+            <label class="pa0 ma0 mr3 lh-copy f6 pointer">
+                <input type="radio" bind:group={caseOption} value="lowercase" /> lowercase
+            </label>
+            <label class="pa0 ma0 lh-copy f6 pointer">
+                <input type="radio" bind:group={caseOption} value="uppercase" /> UPPERCASE
+            </label>
+        </fieldset>
+        <fieldset class="bn pa0 ma0">
+            <legend class="f6 b mb2">Match type:</legend>
+            <label class="pa0 ma0 mr3 lh-copy f6 pointer">
+                <input type="radio" bind:group={matchOption} value="exact" /> Exact matches only
+            </label>
+            <label class="pa0 ma0 lh-copy f6 pointer">
+                <input type="radio" bind:group={matchOption} value="fuzzy" /> Fuzzy matches
+            </label>
+        </fieldset>
     </div>
     <div class="fl w-50 tc pa3">
         <label for="friendly-names" class="f6 b db mb2">Names to convert</label>
@@ -28,7 +44,7 @@
         <label for="database-names" class="f6 b db mb2">Converted database names</label>
         <textarea readonly name="database-names" bind:value={txtDatabaseNames} class="db border-box w-100 ba b--black-20 br2 mb2 bg-light-gray pa2 h5"></textarea>
         
-        {#if chkFuzzyMatch && fuzzyMatches && fuzzyMatches.length > 0}
+        {#if matchOption === 'fuzzy' && fuzzyMatches && fuzzyMatches.length > 0}
             <div class="bg-lightest-blue ba b--light-blue br2 pa2 mt2">
                 <div class="f6 b mb1 blue">Fuzzy matches found:</div>
                 {#each fuzzyMatches as match}
