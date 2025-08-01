@@ -17,24 +17,28 @@
 <form class="cf pa4 black-80 sans-serif">
     <div class="fl w-100 pa3">
         <h1>Database Table Name Converter</h1>
-        <fieldset class="bn pa0 ma0">
-            <legend class="f6 b mb2">Output case:</legend>
-            <label class="pa0 ma0 mr3 lh-copy f6 pointer">
-                <input type="radio" bind:group={caseOption} value="lowercase" /> lowercase
-            </label>
-            <label class="pa0 ma0 lh-copy f6 pointer">
-                <input type="radio" bind:group={caseOption} value="uppercase" /> UPPERCASE
-            </label>
-        </fieldset>
-        <fieldset class="bn pa0 ma0">
-            <legend class="f6 b mb2">Match type:</legend>
-            <label class="pa0 ma0 mr3 lh-copy f6 pointer">
-                <input type="radio" bind:group={matchOption} value="exact" /> Exact matches only
-            </label>
-            <label class="pa0 ma0 lh-copy f6 pointer">
-                <input type="radio" bind:group={matchOption} value="fuzzy" /> Fuzzy matches
-            </label>
-        </fieldset>
+        <div class="fl pa3">
+            <fieldset class="bn pa0 ma0">
+                <legend class="f6 b mb2">Output case:</legend>
+                <label class="pa0 ma0 mr3 lh-copy f6 pointer">
+                    <input type="radio" bind:group={caseOption} value="lowercase" /> lowercase
+                </label>
+                <label class="pa0 ma0 lh-copy f6 pointer">
+                    <input type="radio" bind:group={caseOption} value="uppercase" /> UPPERCASE
+                </label>
+            </fieldset>
+        </div>
+        <div class="fl pa3">
+            <fieldset class="bn pa0 ma0">
+                <legend class="f6 b mb2">Match type:</legend>
+                <label class="pa0 ma0 mr3 lh-copy f6 pointer">
+                    <input type="radio" bind:group={matchOption} value="exact" /> Exact matches only
+                </label>
+                <label class="pa0 ma0 lh-copy f6 pointer">
+                    <input type="radio" bind:group={matchOption} value="fuzzy" /> Fuzzy matches
+                </label>
+            </fieldset>
+        </div>
     </div>
     <div class="fl w-50 tc pa3">
         <label for="friendly-names" class="f6 b db mb2">Names to convert</label>
