@@ -3,9 +3,9 @@
     import { convert } from '$lib/common.js';
 
     let chkIsUppercase = false;
-    let chkConvertUnknown = false;
+    let chkFuzzyMatch = false;
     let txtFriendlyNames = 'create date\ndata lake update timestamp\nassign flag';
-    $: txtDatabaseNames = convert(txtFriendlyNames, chkIsUppercase, chkConvertUnknown);
+    $: txtDatabaseNames = convert(txtFriendlyNames, chkIsUppercase, chkFuzzyMatch);
 </script>
 <svelte:head>
 	<title>Database Table Name Converter</title>
@@ -16,7 +16,7 @@
     <div class="fl w-100 pa3">
         <h1>Database Table Name Converter</h1>
         <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox" bind:checked={chkIsUppercase} /> {chkIsUppercase ? 'UPPERCASE' : 'lowercase'}</label>
-        <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox" bind:checked={chkConvertUnknown} /> {chkConvertUnknown ? 'Try to convert unknown words' : 'Unknown words aren\'t converted'}</label>
+        <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox" bind:checked={chkFuzzyMatch} /> {chkFuzzyMatch ? 'Fuzzy matches' : 'Exact matches only'}</label>
     </div>
     <div class="fl w-50 tc pa3">
         <label for="friendly-names" class="f6 b db mb2">Names to convert</label>

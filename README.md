@@ -1,6 +1,6 @@
 # Database Table Name Generator
 
-Enter the table name in english words and 
+Enter the table name in english words and the app will convert them into abbreviated database names.
 
 ## Developing
 
